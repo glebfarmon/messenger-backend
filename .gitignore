@@ -29,6 +29,7 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 .cursor
+.roo
 
 # IDE - VSCode
 .vscode/*
