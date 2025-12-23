@@ -30,6 +30,7 @@
 		"@nestjs/websockets": "^11.1.9",
 		"@prisma/adapter-pg": "^7.2.0",
 		"@prisma/client": "^7.2.0",
+		"@react-email/components": "^1.0.2",
 		"@thallesp/nestjs-better-auth": "^2.2.0",
 		"argon2": "^0.44.0",
 		"axios": "^1.13.2",
@@ -38,6 +39,7 @@
 		"class-validator": "^0.14.3",
 		"cookie-parser": "^1.4.7",
 		"date-fns": "^4.1.0",
+		"nestjs-resend": "^1.1.0",
 		"reflect-metadata": "^0.2.2",
 		"rxjs": "^7.8.2"
 	},

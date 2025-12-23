@@ -1,6 +1,7 @@
 import {AuthModule} from '@/auth/auth.module'
 import {Module} from '@nestjs/common'
 import {ConfigModule} from '@nestjs/config'
+import {MailModule} from './mail/mail.module'
 import {PrismaModule} from './prisma/prisma.module'
 
 @Module({
@@ -9,7 +10,8 @@ import {PrismaModule} from './prisma/prisma.module'
 			isGlobal: true
 		}),
 		PrismaModule,
-		AuthModule
+		AuthModule,
+		MailModule
 	],
 	controllers: []
 })
