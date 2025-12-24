@@ -1,5 +1,4 @@
 import {HashService} from '@/hash/hash.service'
-import {MailService} from '@/mail/mail.service'
 import {Controller, HttpCode, HttpException, HttpStatus, Param, Post} from '@nestjs/common'
 import {AllowAnonymous, AuthService} from '@thallesp/nestjs-better-auth'
 
@@ -7,7 +6,6 @@ import {AllowAnonymous, AuthService} from '@thallesp/nestjs-better-auth'
 export class MailController {
 	constructor(
 		private authService: AuthService,
-		private mailService: MailService,
 		private hashService: HashService
 	) {}
 

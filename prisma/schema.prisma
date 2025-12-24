@@ -83,6 +83,6 @@ model MailAbuse {
   lastSent  DateTime @updatedAt @map("updated_at")
 
   @@unique([email])
-  @@index([email, lastSent])
+  @@index([email])
   @@map("mail_abuse")
 }
