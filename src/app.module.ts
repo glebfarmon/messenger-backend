@@ -3,6 +3,7 @@ import {Module} from '@nestjs/common'
 import {ConfigModule} from '@nestjs/config'
 import {MailModule} from './mail/mail.module'
 import {PrismaModule} from './prisma/prisma.module'
+import {HashModule} from './hash/hash.module'
 
 @Module({
 	imports: [
@@ -11,7 +12,8 @@ import {PrismaModule} from './prisma/prisma.module'
 		}),
 		PrismaModule,
 		AuthModule,
-		MailModule
+		MailModule,
+		HashModule
 	],
 	controllers: []
 })
