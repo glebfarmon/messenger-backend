@@ -6,8 +6,8 @@ import {PrismaService} from '@/prisma/prisma.service'
 import {Module} from '@nestjs/common'
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import {AuthModule as BetterAuthModule} from '@thallesp/nestjs-better-auth'
-import {betterAuth} from 'better-auth'
 import {prismaAdapter} from 'better-auth/adapters/prisma'
+import {betterAuth} from 'better-auth/minimal'
 
 @Module({
 	imports: [
@@ -35,6 +35,40 @@ import {prismaAdapter} from 'better-auth/adapters/prisma'
 							maxPasswordLength: 24,
 							requireEmailVerification: true
 						},
+						session: {
+							cookieCache: {
+								enabled: true,
+								maxAge: 5 * 60,
+								strategy: 'jwt',
+								refreshCache: true
+							}
+						},
+						plugins: [],
+						disabledPaths: [
+							//'/sign-in/social',
+							//'/get-session',
+							'/sign-out',
+							//'/sign-up/email',
+							//'/sign-in/email',
+							'/reset-password',
+							//'/verify-email',
+							//'/send-verification-email',
+							'/change-email',
+							//'/change-password',
+							'/update-user',
+							'/delete-user',
+							'/request-password-reset',
+							'/reset-password',
+							'/list-sessions',
+							'/revoke-session',
+							'/revoke-sessions',
+							'/revoke-other-sessions',
+							'/link-social',
+							'/list-accounts',
+							'/delete-user/callback',
+							'/unlink-account',
+							'/refresh-to'
+						],
 						emailVerification: {
 							sendOnSignUp: true,
 							sendVerificationEmail: async ({user, token}) => {
@@ -42,7 +76,6 @@ import {prismaAdapter} from 'better-auth/adapters/prisma'
 							}
 						},
 						//TODO FIX ABUSE IN PROD
-						//CRON
 						rateLimit: {
 							enabled: true,
 							max: 70,
