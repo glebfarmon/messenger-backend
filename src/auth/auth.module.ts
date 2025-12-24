@@ -28,6 +28,7 @@ import {prismaAdapter} from 'better-auth/adapters/prisma'
 						baseURL: configService.get('API_URL'),
 						basePath: '/api/auth',
 						secret: configService.get('BETTER_AUTH_SECRET'),
+						trustedOrigins: [configService.get('CLIENT_URL')],
 						emailAndPassword: {
 							enabled: true,
 							minPasswordLength: 8,
