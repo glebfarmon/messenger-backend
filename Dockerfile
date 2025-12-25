@@ -7,14 +7,19 @@ WORKDIR /app
 
 ENV PRISMA_SKIP_POSTINSTALL_GENERATE=1
 ENV HUSKY=0
+ENV NODE_ENV=production
 
 COPY package*.json pnpm-lock.yaml* ./
-COPY prisma ./prisma
 
 RUN pnpm i --ignore-scripts --frozen-lockfile
+
+COPY prisma.config.ts ./
+COPY prisma ./prisma/
+
 RUN pnpm prisma generate
 
 COPY . .
+
 RUN pnpm run build
 RUN pnpm prune --prod --ignore-scripts
 
