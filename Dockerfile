@@ -1,4 +1,4 @@
-FROM node:20.19.6-alpine3.22 AS build
+FROM node:22.21.1-alpine3.22 AS build
 
 RUN apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
@@ -18,7 +18,7 @@ COPY . .
 RUN pnpm run build
 RUN pnpm prune --prod --ignore-scripts
 
-FROM node:20.19.6-alpine3.22 AS production
+FROM node:22.21.1-alpine3.22 AS production
 
 RUN apk add --no-cache libc6-compat
 
