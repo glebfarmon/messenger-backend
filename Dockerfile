@@ -1,4 +1,4 @@
-FROM node:20.19.6 AS build
+FROM node:20.19.6-alpine3.22 AS build
 
 RUN apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
@@ -14,7 +14,7 @@ COPY . .
 RUN pnpm prisma generate
 RUN pnpm run build
 
-FROM node:20.19.6 AS production
+FROM node:20.19.6-alpine3.22 AS production
 
 RUN apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
