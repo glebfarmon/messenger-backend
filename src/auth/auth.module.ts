@@ -8,6 +8,7 @@ import {ConfigModule, ConfigService} from '@nestjs/config'
 import {AuthModule as BetterAuthModule} from '@thallesp/nestjs-better-auth'
 import {prismaAdapter} from 'better-auth/adapters/prisma'
 import {betterAuth} from 'better-auth/minimal'
+import {haveIBeenPwned} from 'better-auth/plugins'
 
 @Module({
 	imports: [
@@ -25,6 +26,7 @@ import {betterAuth} from 'better-auth/minimal'
 							provider: 'postgresql'
 						}),
 						hooks: {},
+						plugins: [haveIBeenPwned()],
 						baseURL: configService.get('API_URL'),
 						basePath: '/api/auth',
 						secret: configService.get('BETTER_AUTH_SECRET'),
