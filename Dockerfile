@@ -5,30 +5,37 @@ RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
 
 WORKDIR /app
 
-COPY package*.json .
+ENV PRISMA_SKIP_POSTINSTALL_GENERATE=1
+ENV HUSKY=0
 
-RUN pnpm i --ignore-scripts
+COPY package*.json pnpm-lock.yaml* ./
+COPY prisma ./prisma
+
+RUN pnpm i --ignore-scripts --frozen-lockfile
+RUN pnpm prisma generate
 
 COPY . .
-
-RUN pnpm prisma generate
 RUN pnpm run build
+RUN pnpm prune --prod --ignore-scripts
 
 FROM node:20.19.6-alpine3.22 AS production
 
 RUN apk add --no-cache libc6-compat
-RUN corepack enable && corepack prepare pnpm@10.13.1 --activate
 
 WORKDIR /app
 
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+COPY --from=build /app/prisma.config.ts ./
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/package*.json ./
-
-RUN pnpm i --prod --ignore-scripts
+COPY --from=build /app/emails ./emails
 
 ENV NODE_ENV=production
-
-CMD [ "node", "dist/main.js" ]
-
 EXPOSE 3200
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["node", "dist/src/main.js"]
