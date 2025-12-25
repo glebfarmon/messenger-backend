@@ -9,6 +9,7 @@ generator client {
   output          = "generated/prisma"
   previewFeatures = ["fullTextSearchPostgres"]
   binaryTargets   = ["native", "linux-musl-openssl-3.0.x"] //linux-musl-openssl-3.0.x -- Node 20+ and Alpine 3.20+
+  moduleFormat    = "cjs"
 }
 
 datasource db {
