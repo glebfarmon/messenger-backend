@@ -1,4 +1,4 @@
-### ================== build ==================
+#BUILD
 FROM node:22.21.1-alpine3.22 AS build
 
 RUN apk add --no-cache libc6-compat
@@ -18,7 +18,7 @@ RUN pnpm prisma generate
 RUN pnpm run build
 
 
-### ================== deps (prod + prisma) ==================
+#DEPS
 FROM node:22.21.1-alpine3.22 AS deps
 
 RUN apk add --no-cache libc6-compat
@@ -35,8 +35,7 @@ RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 COPY prisma ./prisma
 RUN pnpm prisma generate
 
-
-### ================== production ==================
+#PROD
 FROM node:22.21.1-alpine3.22 AS production
 
 RUN apk add --no-cache libc6-compat
@@ -44,7 +43,6 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 ENV NODE_ENV=production
 
-# только runtime-артефакты
 COPY --from=build /app/dist ./dist
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/package.json ./package.json
