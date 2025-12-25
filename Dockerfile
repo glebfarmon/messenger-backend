@@ -9,14 +9,14 @@ ENV PRISMA_SKIP_POSTINSTALL_GENERATE=1
 ENV HUSKY=0
 
 COPY package*.json pnpm-lock.yaml* ./
+COPY prisma ./prisma
 
 RUN pnpm i --ignore-scripts --frozen-lockfile
+RUN pnpm prisma generate
 
 COPY . .
-
-RUN pnpm prisma generate
 RUN pnpm run build
-#RUN pnpm prune --prod --ignore-scripts
+RUN pnpm prune --prod --ignore-scripts
 
 FROM node:22.21.1-alpine3.22 AS production
 
