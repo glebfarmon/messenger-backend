@@ -34,6 +34,8 @@ COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/emails ./emails
 
+RUN find . -maxdepth 3 -not -path '*/.*'
+
 ENV NODE_ENV=production
 EXPOSE 3200
 
