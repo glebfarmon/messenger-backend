@@ -45,7 +45,6 @@ import {haveIBeenPwned} from 'better-auth/plugins'
 								refreshCache: true
 							}
 						},
-						plugins: [],
 						disabledPaths: [
 							//'/sign-in/social',
 							//'/get-session',
