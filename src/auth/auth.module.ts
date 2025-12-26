@@ -20,11 +20,26 @@ import {haveIBeenPwned} from 'better-auth/plugins'
 				configService: ConfigService,
 				mailService: MailService
 			) => {
+				const isProd = configService.get('NODE_ENV') === 'production'
+
 				return {
 					auth: betterAuth({
 						database: prismaAdapter(prismaService, {
 							provider: 'postgresql'
 						}),
+						advanced: {
+							defaultCookieAttributes: {
+								sameSite: isProd ? 'none' : 'lax',
+								secure: isProd,
+								path: '/'
+							},
+							...(isProd && {
+								crossSubDomainCookies: {
+									enabled: true,
+									domain: configService.get('API_DOMAIN')
+								}
+							})
+						},
 						hooks: {},
 						plugins: [haveIBeenPwned()],
 						baseURL: configService.get('API_URL'),
