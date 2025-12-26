@@ -48,6 +48,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/package.json ./package.json
 COPY prisma ./prisma
 COPY prisma.config.ts ./prisma.config.ts
+COPY emails ./emails
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
