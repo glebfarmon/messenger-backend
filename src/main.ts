@@ -18,7 +18,16 @@ async function bootstrap() {
 	)
 
 	app.setGlobalPrefix('api')
-	app.enableCors({credentials: true, origin: process.env.CLIENT_URL})
+	app.enableCors({
+		credentials: true,
+		origin: (origin, callback) => {
+			if (origin !== process.env.CLIENT_URL) {
+				callback(null, true)
+			} else {
+				callback(new Error(`Origin ${origin} not allowed by CORS`))
+			}
+		}
+	})
 	app.enableShutdownHooks()
 	app.use(cookieParser())
 
